@@ -1,4 +1,3 @@
-
 from celery.exceptions import NotRegistered
 
 from .celery import app as celery_app

@@ -10,7 +10,6 @@ from .conf import app_settings
 ##############
 
 api_router = SimpleRouter()
-# api_router.register()
 api_urlpatterns = [
     path("", include(api_router.urls)),
 ]
@@ -20,5 +19,4 @@ api_urlpatterns = [
 # normal routes #
 #################
 
-urlpatterns = [
-]
+urlpatterns = []
