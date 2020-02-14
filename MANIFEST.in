@@ -1,0 +1,4 @@
+include LICENSE
+include README.md
+recursive-include astrosat_tasks/static *
+recursive-include astrosat_tasks/templates *

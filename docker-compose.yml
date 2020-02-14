@@ -1,0 +1,44 @@
+version: "3.5"
+
+services:
+  db:
+    image: postgres:11
+    environment:
+      POSTGRES_DB: tasks_db
+      POSTGRES_USER: tasks_user
+      POSTGRES_PASSWORD: tasks_pwd
+    ports:
+      - "5666:5432"
+    networks:
+      - development
+
+  broker:
+    image: rabbitmq:3-management
+    environment:
+      RABBITMQ_ERLANG_COOOKIE: tasks_cookie
+      RABBITMQ_DEFAULT_USER: tasks_user
+      RABBITMQ_DEFAULT_PASS: tasks_pwd
+    ports:
+      - "5672:5672" # broker
+      - "15672:15672" # manager
+    networks:
+      - development
+
+  server:
+    build:
+      context: .
+    environment:
+      PIPENV_NOSPIN: 1
+      PIPENV_DONT_LOAD_ENV: 1
+      DJANGO_SETTINGS_MODULE: example.settings
+    volumes:
+      - ./example:/home/app/example
+      - ./astrosat_tasks:/home/app/astrosat_tasks
+    ports:
+      - "8000:8000"
+    networks:
+      - development
+
+networks:
+  development:
+    driver: bridge
