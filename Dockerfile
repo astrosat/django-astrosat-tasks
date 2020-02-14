@@ -20,11 +20,11 @@ RUN cd $APP_HOME && pipenv install --dev
 # Install server code
 # COPY --chown=app:app . $APP_HOME/example
 
-# Start task queue
-# COPY --chown=root:root run-celery.sh /etc/service/celery/run
-
 # Start dev server
 COPY --chown=root:root run-server.sh /etc/service/server/run
+
+# Start task queue
+COPY --chown=root:root run-celery.sh /etc/service/celery/run
 
 # necessary to have permission to remove nginx support
 USER root
