@@ -70,12 +70,11 @@ class Command(BaseCommand):
             with warnings.catch_warnings(record=True) as caught_warnings:
                 warnings.simplefilter("always")
 
+            task_result = task.apply_async(
+                args=task_args, kwargs=task_kwargs, throw=True
+            )  # throw=True causes errors to be thrown immediately
             if force:
-                task.apply(
-                    args=task_args, kwargs=task_kwargs, throw=True
-                )  # throw=True causes errors to be thrown immediately
-            else:
-                task.delay(*task_args, **task_kwargs)
+                task_result.wait(timeout=None, propagate=True, interval=0.5)
 
             for w in caught_warnings:
                 self.stderr.write(self.style.WARNING(w.message))
