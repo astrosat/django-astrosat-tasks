@@ -11,8 +11,7 @@ from astrosat_tasks.utils import get_task
 class Command(BaseCommand):
     """
     Allows me to run a registered task as a one-off management command.
-    Takes the fully-qualified task name and an argument list to pass to the task.
-    If an argument contains commas, it is converted to a list.
+    Takes the fully-qualified task name and an args list / kwargs object to pass to the task.
     """
 
     help = "Runs a registered task."
