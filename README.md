@@ -30,7 +30,9 @@ urlpatterns = [
 
 5.  run `python manage.py migrate` to create the astrosat models.
 
-6.  profit!
+6.  add whatever tasks you want in "&lt;app&gt;/tasks.py" using the same syntax as "example/tasks.py".
+
+7)  profit!
 
 ## developing
 
