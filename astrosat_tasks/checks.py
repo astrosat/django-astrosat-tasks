@@ -1,5 +1,6 @@
 import functools
 import operator
+import re
 from itertools import chain
 
 from django.conf import settings
@@ -47,8 +48,13 @@ def check_settings(app_configs):
     errors = []
 
     # obviously, a project that uses astrosat_tasks must connect to a broker
-    # TODO:
-    # if settings.CELERY_BROKER_URL doesn't exist or doesn't match regex...
+    celery_broker_url = getattr(settings, "CELERY_BROKER_URL", "")
+    if re.match(r"^(.+)://(.+):(.+)@(.+):(\d+)$", celery_broker_url) is None:
+        errors.append(
+            Error(
+                f"You are using {APP_NAME} which requires CELERY_BROKER_URL to be set properly."
+            )
+        )
 
     return errors
 
