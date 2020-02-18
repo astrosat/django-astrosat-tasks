@@ -5,6 +5,7 @@ from json.decoder import JSONDecodeError
 from django.core.management.base import BaseCommand, CommandError
 
 from astrosat_tasks.celery import app as celery_app
+from astrosat_tasks.conf import app_settings
 from astrosat_tasks.utils import get_task
 
 
@@ -50,6 +51,9 @@ class Command(BaseCommand):
         self.parser = parser
 
     def handle(self, *args, **options):
+
+        if not app_settings.ASTROSAT_TASKS_ENABLE_CELERY:
+            raise CommandError("CELERY is currently disabled.")
 
         task_name = options["task_name"]
         force = options.get("force")
