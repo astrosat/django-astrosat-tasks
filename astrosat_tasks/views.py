@@ -6,6 +6,7 @@ from rest_framework.response import Response
 
 from drf_yasg.utils import swagger_auto_schema
 
+from .conf import app_settings
 from .serializers import TaskSerializer, TaskResultSerializer, TaskScheduleSerializer
 from .utils import get_all_tasks, get_task
 
@@ -71,12 +72,13 @@ def task_detail_view(request, task_name):
         raise APIException(msg)
 
     if request.method == "POST":
-        # a POST actually runs the task before serializing it
+        # a POST actually tries to run the task before serializing it
+        if not app_settings.ASTROSAT_TASKS_ENABLE_CELERY:
+            raise APIException("CELERY is currently disabled.")
         task_args = request.data.get("task_args", [])
         task_kwargs = request.data.get("task_kwargs", {})
         if not (isinstance(task_args, list) and isinstance(task_kwargs, dict)):
-            msg = f"Invalid args or kwargs"
-            raise APIException(msg)
+            raise APIException("Invalid args or kwargs")
 
         try:
             task_result = task.apply_async(

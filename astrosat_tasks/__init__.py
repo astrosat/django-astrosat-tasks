@@ -17,7 +17,7 @@ APP_NAME = "astrosat_tasks"
 
 VERSION = (0, 0, 1)
 
-__title__ = "django-astrosat-users"
+__title__ = "django-astrosat-tasks"
 __author__ = "Allyn Treshansky"
 __version__ = ".".join(map(str, VERSION))
 
