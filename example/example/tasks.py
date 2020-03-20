@@ -6,6 +6,7 @@ from .models import ExampleThing
 
 
 @shared_task
+@conditional_task
 def add_some_numbers(*args, verbose=False):
     if verbose:
         print(f"going to add these numbers: {args}")

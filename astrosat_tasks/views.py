@@ -51,6 +51,7 @@ def task_list_view(request):
 # list and/or run ONE task #
 ############################
 
+
 @swagger_auto_schema(
     method="get",
     responses={status.HTTP_200_OK: _SwaggerTaskResponseSerializer(many=False)},
