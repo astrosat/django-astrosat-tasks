@@ -18,5 +18,6 @@ class ExampleAppConfig(AppConfig):
         try:
             # register any signals...
             import example.signals  # noqa
-        except ImportError:
+        except ImportError as e:
+            print(e)
             pass

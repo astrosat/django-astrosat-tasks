@@ -1,3 +1,7 @@
+import datetime
+
+from django.utils import timezone
+
 from rest_framework import serializers
 from rest_framework.reverse import reverse_lazy
 
@@ -16,20 +20,22 @@ class TaskScheduleSerializer(serializers.ModelSerializer):
             "name",
             "enabled",
             "one_off",
-            "last_run_at",
-            "total_run_count",
             "task_args",
             "task_kwargs",
-            "schedule",
+            "total_run_count",
+            "timing_info",
         ]
 
     task_args = serializers.CharField(source="args")
     task_kwargs = serializers.CharField(source="kwargs")
-    schedule = serializers.SerializerMethodField()
+    timing_info = serializers.SerializerMethodField()
 
-    def get_schedule(self, obj):
+    def get_timing_info(self, obj):
+
+        schedule = obj.schedule
+        last_run_at = obj.last_run_at
+
         schedule_type = "UNKNOWN"
-
         if obj.interval is not None:
             schedule_type = "interval"
         elif obj.crontab is not None:
@@ -39,7 +45,17 @@ class TaskScheduleSerializer(serializers.ModelSerializer):
         elif obj.clocked is not None:
             schedule_type = "clocked"
 
-        return f"{schedule_type}: {obj.schedule}"
+        (is_due, time_in_seconds_for_next_execution) = schedule.is_due(last_run_at)
+        next_execution_time = timezone.now() + datetime.timedelta(seconds=time_in_seconds_for_next_execution)
+
+        timing_info = {
+            "type": f"{schedule_type}: {schedule}",
+            "last_run_at": last_run_at.replace(microsecond=0),
+            "next_execution": next_execution_time.replace(microsecond=0),
+            "is_due": is_due and obj.enabled,
+        }
+
+        return timing_info
 
 
 #######################################
@@ -75,6 +91,7 @@ class TaskSerializer(serializers.BaseSerializer):
         task_name = instance.name
         results_qs = TaskResult.objects.filter(task_name=task_name)
         schedules_qs = PeriodicTask.objects.filter(task=task_name)
+
 
         task_representation = {
             "name": task_name,

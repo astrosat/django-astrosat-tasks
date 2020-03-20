@@ -1,54 +1,29 @@
-# import pytest
-# import factory
-# from factory.faker import (
-#     Faker as FactoryFaker,
-# )  # note I use FactoryBoy's wrapper of Faker
+import pytest
+import factory
+from factory.faker import (
+    Faker as FactoryFaker,
+)  # note I use FactoryBoy's wrapper of Faker
 
-# from django.contrib.auth import get_user_model
-# from django.contrib.auth.models import AnonymousUser
+from django.contrib.auth import get_user_model
 
 # from django.test import Client
 # from rest_framework.test import APIClient
 
-# from astrosat_users.models import UserSettings
-# from astrosat_users.serializers import UserSerializer
-# from astrosat_users.tests.utils import *
-
-# from .factories import UserFactory
+from astrosat_tasks.tests.factories import *
 
 
-# @pytest.fixture
-# def user_data():
-#     """
-#     Provides a dictionary of user data.
-#     """
-
-#     # rather than use `.build()`, I actually create and then delete the model
-#     # this is so that the related profile can be created as well
-
-#     user = UserFactory()
-#     serializer = UserSerializer(user)
-#     data = serializer.data
-#     data["password"] = user.raw_password
-
-#     user.delete()
-
-#     return data
+@pytest.fixture
+def admin():
+    UserModel = get_user_model()
+    admin = UserModel.objects.create_superuser("admin", "admin@test.com", "password")
+    return admin
 
 
-# @pytest.fixture
-# def admin():
-#     UserModel = get_user_model()
-#     admin = UserModel.objects.create_superuser("admin", "admin@admin.com", "password")
-#     admin.verify()
-#     return admin
-
-
-# @pytest.fixture
-# def user():
-#     user = UserFactory()
-#     # user.verify()
-#     return user
+@pytest.fixture
+def user():
+    UserModel = get_user_model()
+    user = UserModel.objects.create_user("user", "user@test.com", "password")
+    return user
 
 
 # @pytest.fixture
@@ -72,9 +47,3 @@
 #     client = APIClient()
 #     client.force_authenticate(user=user, token=token)
 #     return (client, user, token, key)
-
-
-# @pytest.fixture
-# def user_settings():
-#     user_settings = UserSettings.load()
-#     return user_settings

@@ -15,7 +15,7 @@ ___________              __
 
 APP_NAME = "astrosat_tasks"
 
-VERSION = (0, 0, 1)
+VERSION = (0, 1, 0)
 
 __title__ = "django-astrosat-tasks"
 __author__ = "Allyn Treshansky"

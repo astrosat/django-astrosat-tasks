@@ -14,9 +14,9 @@ version = __import__("astrosat_tasks").__version__
 
 install_requires = [
     # django, duh
-    "django~=2.2",
+    "django~=3.0",
     # task scheduling
-    "django-celery-beat>=1.6",
+    "django-celery-beat>=2.0",
     # task results
     "django-celery-results>=1.2",
 ]

@@ -4,23 +4,25 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [packages]
-django = "~=2.2"
-django-environ = ">=0.4"
+django = "~=3.0"
+django-environ = "*"
 django-filter = "*"
-djangorestframework = "~=3.10"
-drf-yasg = ">=1.17"
-psycopg2-binary = ">=2.8"
+djangorestframework = "~=3.0"
+drf-yasg = "*"
+flower = "*"
+psycopg2-binary = "*"
 pytz = "*"
-django-celery-results = ">=1.2.0"
-django-celery-beat = ">=1.6.0"
+django-celery-results = ">=1.2"
+django-celery-beat = ">=2.0"
 django-astrosat-core = {editable = true,git = "https://github.com/astrosat/django-astrosat-core.git",ref = "master"}
 django-astrosat-tasks = {editable = true,path = "."}
 
 [dev-packages]
 django-debug-toolbar = ">=2.2"
 factory-boy = ">=2.12"
-pytest = ">=5.3"
+pytest = "==5.3.5"
 pytest-django = ">=3.8"
+pytest-sugar = ">=0.9"
 
 [requires]
 python_version = "3.6"

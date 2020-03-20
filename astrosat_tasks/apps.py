@@ -17,7 +17,8 @@ class AstrosatTasksConfig(AppConfig):
         try:
             # register any signals...
             import astrosat_tasks.signals  # noqa
-        except ImportError:
+        except ImportError as e:
+            print(e)
             pass
 
         # register any tasks...
