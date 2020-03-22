@@ -45,14 +45,15 @@ class TaskScheduleSerializer(serializers.ModelSerializer):
         elif obj.clocked is not None:
             schedule_type = "clocked"
 
-        (is_due, time_in_seconds_for_next_execution) = schedule.is_due(last_run_at)
-        next_execution_time = timezone.now() + datetime.timedelta(seconds=time_in_seconds_for_next_execution)
+        # TODO: DOESN'T WORK IF last_run_at IS None
+        # (is_due, time_in_seconds_for_next_execution) = schedule.is_due(last_run_at)
+        # next_execution_time = timezone.now() + datetime.timedelta(seconds=time_in_seconds_for_next_execution)
 
         timing_info = {
             "type": f"{schedule_type}: {schedule}",
-            "last_run_at": last_run_at.replace(microsecond=0),
-            "next_execution": next_execution_time.replace(microsecond=0),
-            "is_due": is_due and obj.enabled,
+            "last_execution": last_run_at,#.replace(microsecond=0),
+            # "next_execution": next_execution_time,#.replace(microsecond=0),
+            # "is_due": is_due,
         }
 
         return timing_info

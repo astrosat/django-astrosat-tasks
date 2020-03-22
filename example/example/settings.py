@@ -228,6 +228,37 @@ CELERY_RESULT_BACKEND = "django-db"
 # django_celery_beat
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers.DatabaseScheduler"
 
+###########
+# Logging #
+###########
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "standard": {
+            "format": "[develop] %(asctime)s [%(levelname)s] %(name)s: %(message)s"
+        }
+    },
+    "handlers": {
+        "console": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "formatter": "standard",
+        },
+    },
+    "root": {"handlers": ["console"], "level": "DEBUG",},
+    "loggers": {
+        # when DEBUG is True, these loggers spit out _way_ too much information
+        # so I'm increasing their levels
+        "celery": {"level": "INFO"},
+        "django.db.backends": {"level": "INFO"},
+        "django.utils.autoreload": {"level": "INFO"},
+        "environ.environ": {"level": "INFO"},
+        "asyncio": {"level": "INFO"},
+    },
+}
+
 #############
 # Profiling #
 #############
