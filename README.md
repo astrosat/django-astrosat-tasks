@@ -48,4 +48,10 @@ django-astrosat-tasks comes w/ an example project to help w/ developing/testing.
 
 note that the reference to django-astrosat-users in "Pipfile" was created with: `pipenv install -e .`. This looks for the "setup.py" file in the current directory. If the distribution changes just run `pipenv update django-astrosat-tasks`, otherwise code changes should just be picked up b/c of the "-e" flag.
 
-note also that in order for runserver to pickup live changes to the code, the Pipfile, Dockerfile, etc. are at the ROOT*DIR rather than in the example app, and \_both* example and astrosat_tasks are mounted as volumes in docker-compose.yml.
+note also that in order for runserver to pickup live changes to the code, the Pipfile, Dockerfile, etc. are at the ROOT*DIR rather than in the example app, and both* example and astrosat_tasks are mounted as volumes in docker-compose.yml.
+
+In most projects, you will want to run celery as a service using something like this:
+
+```
+celery worker --app=astrosat_tasks.celery:app --beat --scheduler django_celery_beat.schedulers.DatabaseScheduler --workdir=$APP_HOME/server --loglevel=INFO -n worker.%%h
+```
