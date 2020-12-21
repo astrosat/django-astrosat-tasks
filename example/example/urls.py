@@ -18,7 +18,6 @@ from astrosat_tasks.urls import (
 
 from .views import index_view
 
-
 admin.site.site_header = settings.ADMIN_SITE_HEADER
 admin.site.site_title = settings.ADMIN_SITE_TITLE
 admin.site.index_title = settings.ADMIN_INDEX_TITLE
@@ -27,7 +26,6 @@ handler400 = "astrosat.views.handler400"
 handler403 = "astrosat.views.handler403"
 handler404 = "astrosat.views.handler404"
 handler500 = "astrosat.views.handler500"
-
 
 ##############
 # api routes #
@@ -40,7 +38,6 @@ api_urlpatterns = [
     path("", include(api_schema_views)),
 ]
 api_urlpatterns += astrosat_tasks_api_urlpatterns
-
 
 #################
 # normal routes #
@@ -77,9 +74,8 @@ if settings.DEBUG:
         path("400/", partial(handler400, exception=HttpResponseBadRequest())),
         path("403/", partial(handler403, exception=HttpResponseForbidden())),
         path("404/", partial(handler404, exception=HttpResponseNotFound())),
-        path(
-            "500/", handler500
-        ),  # "default_views.server_error" doesn't take an exception
+        path("500/", handler500
+            ),  # "default_views.server_error" doesn't take an exception
     ]
 
     # enable django-debug-toolbar during development...
@@ -88,4 +84,6 @@ if settings.DEBUG:
 
         import debug_toolbar
 
-        urlpatterns = [path("__debug__/", include(debug_toolbar.urls))] + urlpatterns
+        urlpatterns = [
+            path("__debug__/", include(debug_toolbar.urls))
+        ] + urlpatterns

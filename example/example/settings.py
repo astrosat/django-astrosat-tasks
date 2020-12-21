@@ -44,12 +44,18 @@ ALLOWED_HOSTS = ["*"]
 DATABASES = {
     "default":
         {
-            "ENGINE": "django.db.backends.postgresql",
-            "HOST": env("DJANGO_DB_HOST", default=""),
-            "PORT": env("DJANGO_DB_PORT", default=""),
-            "NAME": env("DJANGO_DB_NAME", default=""),
-            "USER": env("DJANGO_DB_USER", default=""),
-            "PASSWORD": env("DJANGO_DB_PASSWORD", default=""),
+            "ENGINE":
+                env("DJANGO_DB_ENGINE", default="django.db.backends.sqlite3"),
+            "NAME":
+                env("DJANGO_DB_NAME", default="db.sqlite3"),
+            "HOST":
+                env("DJANGO_DB_HOST", default=""),
+            "PORT":
+                env("DJANGO_DB_PORT", default=""),
+            "USER":
+                env("DJANGO_DB_USER", default=""),
+            "PASSWORD":
+                env("DJANGO_DB_PASSWORD", default=""),
         }
 }
 
@@ -224,9 +230,9 @@ SWAGGER_SETTINGS = {
 CELERY_BROKER_URL = "{transport}://{user}:{password}@{host}:{port}".format(
     transport=env("DJANGO_CELERY_BROKER_TRANSPORT", default="amqp"),
     port=env("DJANGO_CELERY_BROKER_PORT", default="5672"),
-    host=env("DJANGO_CELERY_BROKER_HOST"),
-    user=env("DJANGO_CELERY_BROKER_USER"),
-    password=env("DJANGO_CELERY_BROKER_PASSWORD"),
+    host=env("DJANGO_CELERY_BROKER_HOST", default="broker"),
+    user=env("DJANGO_CELERY_BROKER_USER", default="tasks"),
+    password=env("DJANGO_CELERY_BROKER_PASSWORD", default="tasks"),
 )
 
 CELERY_ACCEPT_CONTENT = ["json"]

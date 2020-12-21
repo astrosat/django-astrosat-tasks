@@ -9,7 +9,6 @@ from django.core.checks import register, Error, Tags
 from . import APP_NAME
 from .conf import app_settings
 
-
 # apps required by astrosat_tasks
 APP_DEPENDENCIES = [
     "astrosat",
@@ -64,9 +63,7 @@ def check_third_party_settings(app_configs, **kwargs):
 
     errors = []
 
-    third_party_settings = [
-        app_settings.CELERY_SETTINGS
-    ]
+    third_party_settings = [app_settings.CELERY_SETTINGS]
 
     for key, value in chain(*map(lambda x: x.items(), third_party_settings)):
         setting = getattr(settings, key, None)

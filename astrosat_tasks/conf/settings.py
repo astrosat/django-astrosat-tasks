@@ -9,7 +9,6 @@ from .. import APP_NAME
 
 env = environ.Env()
 
-
 PROJECT_NAME = getattr(settings, "PROJECT_NAME", "Django Astrosat TASKS")
 PROJECT_SLUG = getattr(settings, "PROJECT_SLUG", slugify(PROJECT_NAME))
 

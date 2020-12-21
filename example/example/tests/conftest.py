@@ -15,7 +15,9 @@ from astrosat_tasks.tests.factories import *
 @pytest.fixture
 def admin():
     UserModel = get_user_model()
-    admin = UserModel.objects.create_superuser("admin", "admin@test.com", "password")
+    admin = UserModel.objects.create_superuser(
+        "admin", "admin@test.com", "password"
+    )
     return admin
 
 
@@ -34,7 +36,6 @@ def user():
 #     client = Client(enforce_csrf_checks=False)
 #     client.force_login(AnonymousUser())
 #     return client
-
 
 # @pytest.fixture
 # def api_client(user):
