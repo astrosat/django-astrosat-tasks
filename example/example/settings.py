@@ -10,10 +10,9 @@ import os
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.html import escape
 from django.utils.text import slugify
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from astrosat.utils import DynamicSetting
-
 
 PROJECT_NAME = "Example Project"
 PROJECT_SLUG = slugify(PROJECT_NAME)
@@ -43,14 +42,15 @@ ALLOWED_HOSTS = ["*"]
 ############
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "HOST": env("DJANGO_DB_HOST", default=""),
-        "PORT": env("DJANGO_DB_PORT", default=""),
-        "NAME": env("DJANGO_DB_NAME", default=""),
-        "USER": env("DJANGO_DB_USER", default=""),
-        "PASSWORD": env("DJANGO_DB_PASSWORD", default=""),
-    }
+    "default":
+        {
+            "ENGINE": "django.db.backends.postgresql",
+            "HOST": env("DJANGO_DB_HOST", default=""),
+            "PORT": env("DJANGO_DB_PORT", default=""),
+            "NAME": env("DJANGO_DB_NAME", default=""),
+            "USER": env("DJANGO_DB_USER", default=""),
+            "PASSWORD": env("DJANGO_DB_PASSWORD", default=""),
+        }
 }
 
 ########
@@ -67,7 +67,7 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     # api...
     "django_filters",
-    "drf_yasg",
+    "drf_yasg2",
     "rest_framework",
     # tasks...
     "django_celery_beat",
@@ -103,14 +103,16 @@ TEMPLATES = [
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [],
         "APP_DIRS": True,
-        "OPTIONS": {
-            "context_processors": [
-                "django.template.context_processors.debug",
-                "django.template.context_processors.request",
-                "django.contrib.auth.context_processors.auth",
-                "django.contrib.messages.context_processors.messages",
-            ],
-        },
+        "OPTIONS":
+            {
+                "context_processors":
+                    [
+                        "django.template.context_processors.debug",
+                        "django.template.context_processors.request",
+                        "django.contrib.auth.context_processors.auth",
+                        "django.contrib.messages.context_processors.messages",
+                    ],
+            },
     }
 ]
 
@@ -145,10 +147,21 @@ LOGOUT_REDIRECT_URL = "/"
 #############
 
 AUTH_PASSWORD_VALIDATORS = [
-    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
+    {
+        "NAME":
+            "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"
+    },
+    {
+        "NAME":
+            "django.contrib.auth.password_validation.CommonPasswordValidator"
+    },
+    {
+        "NAME":
+            "django.contrib.auth.password_validation.NumericPasswordValidator"
+    },
 ]
 
 ########################
@@ -180,23 +193,24 @@ REST_FRAMEWORK = {
 }
 
 SWAGGER_SETTINGS = {
-    "SECURITY_DEFINITIONS": {
-        "Bearer": {
-            "type": "apiKey",
-            "name": "Authorization",
-            "in": "header",
-            "description": escape("Enter 'Bearer <token>'"),
+    "SECURITY_DEFINITIONS":
+        {
+            "Bearer":
+                {
+                    "type": "apiKey",
+                    "name": "Authorization",
+                    "in": "header",
+                    "description": escape("Enter 'Bearer <token>'"),
+                },
+            "Basic": {
+                "type": "basic"
+            },
         },
-        "Basic": {
-            "type": "basic"
-        },
-    },
     "DOC_EXPANSION": "none",
     "OPERATIONS_SORTER": None,
     "TAGS_SORTER": "alpha",
     "DEFAULT_MODEL_RENDERING": "example",
 }
-
 
 #########
 # Tasks #
@@ -235,28 +249,47 @@ CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers.DatabaseScheduler"
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
-    "formatters": {
-        "standard": {
-            "format": "[develop] %(asctime)s [%(levelname)s] %(name)s: %(message)s"
-        }
-    },
-    "handlers": {
-        "console": {
-            "level": "DEBUG",
-            "class": "logging.StreamHandler",
-            "formatter": "standard",
+    "formatters":
+        {
+            "standard":
+                {
+                    "format":
+                        "[develop] %(asctime)s [%(levelname)s] %(name)s: %(message)s"
+                }
         },
+    "handlers":
+        {
+            "console":
+                {
+                    "level": "DEBUG",
+                    "class": "logging.StreamHandler",
+                    "formatter": "standard",
+                },
+        },
+    "root": {
+        "handlers": ["console"],
+        "level": "DEBUG",
     },
-    "root": {"handlers": ["console"], "level": "DEBUG",},
-    "loggers": {
-        # when DEBUG is True, these loggers spit out _way_ too much information
-        # so I'm increasing their levels
-        "celery": {"level": "INFO"},
-        "django.db.backends": {"level": "INFO"},
-        "django.utils.autoreload": {"level": "INFO"},
-        "environ.environ": {"level": "INFO"},
-        "asyncio": {"level": "INFO"},
-    },
+    "loggers":
+        {
+            # when DEBUG is True, these loggers spit out _way_ too much information
+            # so I'm increasing their levels
+            "celery": {
+                "level": "INFO"
+            },
+            "django.db.backends": {
+                "level": "INFO"
+            },
+            "django.utils.autoreload": {
+                "level": "INFO"
+            },
+            "environ.environ": {
+                "level": "INFO"
+            },
+            "asyncio": {
+                "level": "INFO"
+            },
+        },
 }
 
 #############
@@ -280,7 +313,10 @@ if DEBUG:
         "debug_toolbar.middleware.DebugToolbarMiddleware",
         "astrosat.middleware.JSONDebugToolbarMiddleware",
     ]  # noqa F405
-    DEBUG_TOOLBAR_CONFIG = {"SHOW_TEMPLATE_CONTEXT": True, "SHOW_COLLAPSED": True}
+    DEBUG_TOOLBAR_CONFIG = {
+        "SHOW_TEMPLATE_CONTEXT": True,
+        "SHOW_COLLAPSED": True
+    }
     DEBUG_TOOLBAR_PANELS = [
         "debug_toolbar.panels.versions.VersionsPanel",
         "debug_toolbar.panels.timer.TimerPanel",

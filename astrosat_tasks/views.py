@@ -4,16 +4,16 @@ from rest_framework.exceptions import APIException
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 
-from drf_yasg.utils import swagger_auto_schema
+from drf_yasg2.utils import swagger_auto_schema
 
 from .conf import app_settings
 from .serializers import TaskSerializer, TaskResultSerializer, TaskScheduleSerializer
 from .utils import get_all_tasks, get_task
 
-
 ##############################################
 # some "dummy" serializers to use w/ swagger #
 ##############################################
+
 
 class _SwaggerTaskRequestSerializer(serializers.Serializer):
     task_args = serializers.JSONField()
@@ -32,6 +32,7 @@ class _SwaggerTaskResponseSerializer(serializers.Serializer):
 # list ALL tasks #
 ##################
 
+
 @swagger_auto_schema(
     method="get",
     responses={status.HTTP_200_OK: _SwaggerTaskResponseSerializer(many=True)},
@@ -43,7 +44,9 @@ def task_list_view(request):
     Lists all tasks registered by this app w/ celery.
     """
     queryset = get_all_tasks()
-    serializer = TaskSerializer(queryset, many=True, context={"request": request})
+    serializer = TaskSerializer(
+        queryset, many=True, context={"request": request}
+    )
     return Response(serializer.data)
 
 
