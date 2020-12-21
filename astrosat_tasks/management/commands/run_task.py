@@ -30,21 +30,24 @@ class Command(BaseCommand):
             "--task-args",
             default="[]",
             dest="task_args",
-            help="A JSON list of arguments to pass to the task (ie: '[\"foo\", 23]')",
+            help=
+            "A JSON list of arguments to pass to the task (ie: '[\"foo\", 23]')",
         )
 
         parser.add_argument(
             "--task-kwargs",
             default="{}",
             dest="task_kwargs",
-            help="A JSON dictionary of arguments to pass to the task (ie: '{\"foo\": 23}')",
+            help=
+            "A JSON dictionary of arguments to pass to the task (ie: '{\"foo\": 23}')",
         )
 
         parser.add_argument(
             "--force",
             action="store_true",
             dest="force",
-            help="Run the task immediately (synchronously) instead of submitting it to the broker (asynchronously)",
+            help=
+            "Run the task immediately (synchronously) instead of submitting it to the broker (asynchronously)",
         )
 
         # keep track of the parser so I can have more informative error handling

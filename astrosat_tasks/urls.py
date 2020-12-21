@@ -4,7 +4,6 @@ from rest_framework.routers import SimpleRouter
 
 from .views import task_list_view, task_detail_view
 
-
 ##############
 # API routes #
 ##############
@@ -15,7 +14,6 @@ api_urlpatterns = [
     path("tasks/", task_list_view, name="tasks-list"),
     path("tasks/<str:task_name>/", task_detail_view, name="tasks-detail"),
 ]
-
 
 #################
 # normal routes #
