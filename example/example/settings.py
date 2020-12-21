@@ -224,9 +224,9 @@ SWAGGER_SETTINGS = {
 CELERY_BROKER_URL = "{transport}://{user}:{password}@{host}:{port}".format(
     transport=env("DJANGO_CELERY_BROKER_TRANSPORT", default="amqp"),
     port=env("DJANGO_CELERY_BROKER_PORT", default="5672"),
-    host=env("DJANGO_CELERY_BROKER_HOST"),
-    user=env("DJANGO_CELERY_BROKER_USER"),
-    password=env("DJANGO_CELERY_BROKER_PASSWORD"),
+    host=env("DJANGO_CELERY_BROKER_HOST", default="broker"),
+    user=env("DJANGO_CELERY_BROKER_USER", default=""),
+    password=env("DJANGO_CELERY_BROKER_PASSWORD", default=""),
 )
 
 CELERY_ACCEPT_CONTENT = ["json"]
